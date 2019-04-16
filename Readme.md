@@ -1,10 +1,12 @@
-#######Simulator Specification 
+### Simulator Specification
+
 Model a gshare branch predictor with parameters {m, n}, where: 
  m is the number of low‐order PC bits used to form the prediction table index. Note: discard the 
 lowest two bits of the PC, since these are always zero, i.e., use bits m+1 through 2 of the PC. 
  n is the number of bits in the global branch history register. Note: n ≤ m. Note: n may equal 
 zero, in which case we have the simple bimodal branch predictor. 
-3.1. n=0: bimodal branch predictor 
+
+1. n=0: bimodal branch predictor 
 When n=0, the gshare predictor reduces to a simple bimodal predictor. In this case, the index is based 
 on only the branch’s PC, as shown in Fig. 1 below. 
 Entry in the prediction table: 
@@ -23,7 +25,7 @@ prediction table is incremented if the branch was taken, decremented if the bran
 The counter saturates at the extremes (0 and 7), however.
 
 
-3.2. n>0: gshare branch predictor
+2. n>0: gshare branch predictor
 When n > 0, there is an n‐bit global branch history register. In this case, the index is based on both the 
 branch’s PC and the global branch history register, as shown in Fig. 2 below. The global branch history 
 register is initialized to all zeroes (00...0) at the beginning of the simulation. 
@@ -39,7 +41,7 @@ The counter saturates at the extremes (0 and 7), however.
 (4) Update the global branch history register. Shift the register right by 1 bit position, and place the 
 branch’s actual outcome into the most‐significant bit position of the register. 
 
-3.3. Hybrid branch predictor
+3. Hybrid branch predictor
 Model a hybrid predictor that selects between the bimodal and the gshare predictors, using a chooser 
 table of 2k
  2‐bit counters. All counters in the chooser table are initialized to 1 at the beginning of the 
@@ -59,7 +61,7 @@ Section 3.2, otherwise follow step 3 in Section 3.1).
 (5) Note that the gshare’s global branch history register must always be updated, even if bimodal was 
 selected (follow step 4 in Section 3.2). 
 
-###### Inputs to Simulator 
+### Inputs to Simulator 
 The simulator reads a trace file in the following format: 
 <hex branch PC>  t|n 
 <hex branch PC>  t|n 
@@ -75,7 +77,7 @@ Example:
 00a3b60c n  
 
 
-######Outputs from Simulator 
+### Outputs from Simulator 
 The simulator outputs the following measurements after completion of the run: 
 a. number of accesses to the predictor (i.e., number of branches) 
 b. number of branch mispredictions (predicted taken when not‐taken, or predicted not‐taken when 
